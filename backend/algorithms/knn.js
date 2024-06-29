@@ -10,10 +10,11 @@ function knn(data, query) {
         point['distance'] = distance;
         distances.push(point);
     }
+
     distances.sort((a, b) => a.distance - b.distance);
     return distances.slice(0, query.k).map(ele => ({
         ...ele,
-        category: getCategory(ele.listPrice)
+        category: getCategory(ele.listPrice),
     }));
 }
 

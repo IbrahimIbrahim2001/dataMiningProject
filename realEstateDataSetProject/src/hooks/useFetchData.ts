@@ -31,7 +31,7 @@ export function useFetchData() {
     })
 }
 
-export function usePostData() {
+export function usePostData(onSuccess: () => void) {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     return useMutation({
@@ -39,6 +39,7 @@ export function usePostData() {
         mutationFn: (data: formValues) => postData(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["real-estate"] })
+            onSuccess();
             navigate('../');
         },
     })

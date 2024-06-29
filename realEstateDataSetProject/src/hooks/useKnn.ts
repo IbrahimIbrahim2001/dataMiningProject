@@ -26,6 +26,7 @@ export function usePostKnnData() {
         onSuccess: async (res) => {
             dispatch(getKnnData(res));
             navigate('../knn-results');
+            console.log(res);
         },
         onError: (error) => console.log(error.message),
     })
