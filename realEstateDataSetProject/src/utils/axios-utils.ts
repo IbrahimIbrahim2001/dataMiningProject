@@ -1,7 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 
-const BASEURL = 'http://localhost:3000';
-
+const BASEURL = 'https://dataminingproject.onrender.com'
 const client = axios.create({
     baseURL: BASEURL
 });
