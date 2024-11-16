@@ -13,7 +13,6 @@ import AddNewPropertyFormPage from "./pages/AddNewPropertyForm.page";
 //layouts
 import HomeLayout from "./layouts/HomeLayout";
 
-
 const routes = createRoutesFromElements(
     <Route element={<HomeLayout />}>
         <Route index element={<RealEstatePage />} />
@@ -26,5 +25,4 @@ const routes = createRoutesFromElements(
     </Route>
 )
 
-
-export const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(routes, { basename: "/dataMiningProject/" });
