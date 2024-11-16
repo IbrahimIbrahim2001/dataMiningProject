@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import request from "../utils/axios-utils";
 
 
 type formValues = {
@@ -12,15 +12,13 @@ type formValues = {
     listPrice: number
 }
 
-
 const fetchData = async () => {
-    const response = await axios.get("http://localhost:3000/realEstateData")
+    const response = await request({ url: "/realEstateData", method: 'get' });
     return response.data;
 }
 
 const postData = async (data: formValues) => {
-    console.log(data);
-    const response = await axios.post("http://localhost:3000/add", data)
+    const response = await request({ url: "/add", method: 'post', data: data });
     return response.data;
 }
 

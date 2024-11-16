@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { getKmeanData } from "../features/Kmeans/kmeansSlice";
+import request from "../utils/axios-utils";
 
 
 type userFormData = {
@@ -10,8 +10,7 @@ type userFormData = {
 }
 
 const kmeansPostData = async (data: userFormData) => {
-    const response = await axios.post("http://localhost:3000/kmeans", data)
-
+    const response = await request({ url: "/kmeans", method: 'post', data: data });
     return response.data;
 }
 

@@ -11,7 +11,7 @@ type formValues = {
 
 export default function KmeanFormComponent() {
 
-    const { mutate } = usePostKmeansData();
+    const { mutate, status } = usePostKmeansData();
     const form = useForm<formValues>();
     const { register, handleSubmit } = form;
     const submitData = (data: formValues) => {
@@ -29,9 +29,8 @@ export default function KmeanFormComponent() {
                 description="Specify the number of centroids to consider for clustering"
             />
             <Button type="submit" mt="md" variant="filled" bg="indigo">
-                Submit
+                {status === 'idle' ? "Submit" : "Submiting..."}
             </Button>
-            {/* <DevTool control={control} /> */}
         </form>
     );
 }

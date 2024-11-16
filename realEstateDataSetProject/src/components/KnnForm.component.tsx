@@ -28,7 +28,7 @@ const inputFieldsArray: inputFieldType[] = [
 
 
 export default function KnnFormComponent() {
-  const { mutate } = usePostKnnData();
+  const { mutate, status } = usePostKnnData();
   const form = useForm<formValues>();
   const { register, handleSubmit } = form;
 
@@ -51,7 +51,7 @@ export default function KnnFormComponent() {
         />
       ))}
       <Button type="submit" mt="md" variant="filled" bg="indigo">
-        Submit
+        {status === 'idle' ? "Submit" : "Submiting..."}
       </Button>
     </form>
   );

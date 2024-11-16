@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { getKnnData } from "../features/Knn/knnSlice";
+import request from "../utils/axios-utils";
 
 type userFormData = {
     bedrooms: number,
@@ -13,7 +13,8 @@ type userFormData = {
 }
 
 const knnPostData = async (data: userFormData) => {
-    const response = await axios.post("http://localhost:3000/knn", data)
+    const response = await request({ url: "/knn", method: 'post', data: data });
+
     return response.data;
 }
 
