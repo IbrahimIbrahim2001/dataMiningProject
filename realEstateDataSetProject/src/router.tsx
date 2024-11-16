@@ -25,4 +25,4 @@ const routes = createRoutesFromElements(
     </Route>
 )
 
-export const router = createBrowserRouter(routes, { basename: "/realestatedatasetproject/" });
+export const router = createBrowserRouter(routes);
