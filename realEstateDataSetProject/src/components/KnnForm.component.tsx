@@ -1,7 +1,8 @@
-import { Button, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { useForm } from "react-hook-form";
 
 import { usePostKnnData } from "../hooks/useKnn";
+import SubmitButton from "./SubmitButton";
 
 type formValues = {
   bedrooms: number;
@@ -50,9 +51,7 @@ export default function KnnFormComponent() {
           description={element.description}
         />
       ))}
-      <Button type="submit" mt="md" variant="filled" bg="indigo">
-        {status === 'idle' ? "Submit" : "Submiting..."}
-      </Button>
+      <SubmitButton status={status} />
     </form>
   );
 }

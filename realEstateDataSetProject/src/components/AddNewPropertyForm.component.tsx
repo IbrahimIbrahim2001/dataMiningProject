@@ -1,11 +1,12 @@
 //mantine UI
-import { Button, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 //react-hook-form
 import { useForm } from "react-hook-form";
 //hooks
 import { usePostData } from "../hooks/useFetchData";
 //context
 import { useSuccessNotification } from "../context/SuccessNotificationProvider";
+import SubmitButton from "./SubmitButton";
 
 type formValues = {
     bedrooms: number,
@@ -34,13 +35,13 @@ const inputFieldsArray: inputFieldType[] = [
 
 
 export default function AddNewPropertyFormComponent() {
+    const form = useForm<formValues>();
+    const { register, handleSubmit } = form;
     const { handleNotify } = useSuccessNotification();
     const onSucces: () => void = () => {
         handleNotify('Property Added Successfully')
     }
-    const { mutate } = usePostData(onSucces);
-    const form = useForm<formValues>();
-    const { register, handleSubmit } = form;
+    const { mutate, status } = usePostData(onSucces);
     const submitData = (data: formValues) => {
         mutate(data);
     }
@@ -59,9 +60,7 @@ export default function AddNewPropertyFormComponent() {
                         description={element.description}
                     />
                 ))}
-                <Button type="submit" mt="md" variant="filled" bg="indigo">
-                    Submit
-                </Button>
+                <SubmitButton status={status} />
             </form>
         </>
     )

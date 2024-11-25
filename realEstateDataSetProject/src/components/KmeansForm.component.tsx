@@ -1,7 +1,8 @@
 //mantine UI
-import { Button, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { useForm } from "react-hook-form";
 import { usePostKmeansData } from "../hooks/useKmeans";
+import SubmitButton from "./SubmitButton";
 
 // import { DevTool } from "@hookform/devtools";
 
@@ -28,9 +29,7 @@ export default function KmeanFormComponent() {
                 placeholder="Enter a valid number please"
                 description="Specify the number of centroids to consider for clustering"
             />
-            <Button type="submit" mt="md" variant="filled" bg="indigo">
-                {status === 'idle' ? "Submit" : "Submiting..."}
-            </Button>
+            <SubmitButton status={status} />
         </form>
     );
 }
