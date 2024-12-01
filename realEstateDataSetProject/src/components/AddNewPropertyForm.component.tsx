@@ -7,6 +7,8 @@ import { usePostData } from "../hooks/useFetchData";
 //context
 import { useSuccessNotification } from "../context/SuccessNotificationProvider";
 import SubmitButton from "./SubmitButton";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type formValues = {
     bedrooms: number,
@@ -24,6 +26,21 @@ type inputFieldType = {
     description?: string;
 };
 
+const DATE = new Date();
+const NEXTYEAR = DATE.getFullYear() + 1;
+const SHAREDNUMBERMESSAGE = "Enter A Realistic Numbers, For Accurate Results";
+const SHAREDPOSITIVENUMBERMESSAGE = "Not A Valid Number";
+
+
+const AddPropertySchema = z.object({
+    bedrooms: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE }),
+    bathrooms: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE }),
+    garage: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE }),
+    sqft: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE }),
+    yearBuilt: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE }).gt(1900, "Only Greater Than 1900").lt(NEXTYEAR, `Only Less Than ${NEXTYEAR}`).gt(1900, "Only Greater Than 1900").lt(NEXTYEAR, `Only Less Than ${NEXTYEAR}`),
+    listPrice: z.number({ message: SHAREDNUMBERMESSAGE }).positive({ message: SHAREDPOSITIVENUMBERMESSAGE })
+})
+
 const inputFieldsArray: inputFieldType[] = [
     { id: 1, inputName: 'bedrooms', label: 'Number of Bedrooms' },
     { id: 2, inputName: 'bathrooms', label: 'Number of Bathrooms' },
@@ -35,7 +52,9 @@ const inputFieldsArray: inputFieldType[] = [
 
 
 export default function AddNewPropertyFormComponent() {
-    const form = useForm<formValues>();
+    const form = useForm<formValues>(({
+        resolver: zodResolver(AddPropertySchema)
+    }));
     const { register, handleSubmit } = form;
     const { handleNotify } = useSuccessNotification();
     const onSucces: () => void = () => {
@@ -55,7 +74,7 @@ export default function AddNewPropertyFormComponent() {
                         withAsterisk
                         mt="md"
                         label={element.label}
-                        {...register(element.inputName, { required: true })}
+                        {...register(element.inputName, { required: true, setValueAs: (v) => parseInt(v, 10) })}
                         placeholder="Enter a valid number please"
                         description={element.description}
                     />

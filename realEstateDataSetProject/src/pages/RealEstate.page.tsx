@@ -1,5 +1,6 @@
 //mantine UI
-import { Box, Table } from '@mantine/core';
+import { Box, em, Table } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
 //hooks
 import { useFetchData } from "../hooks/useFetchData";
@@ -19,23 +20,28 @@ import { useSuccessNotification } from '../context/SuccessNotificationProvider';
 
 export default function RealEstatePage() {
   const { notify } = useSuccessNotification();
-  const { data: realEstates, isLoading, isRefetching } = useFetchData();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const boxStyle: React.CSSProperties = {
+    overflowX: isMobile ? "auto" : "unset"
+  };
+
+  const { data: realEstates, isLoading } = useFetchData();
   const realEstatesJsx = realEstates?.map((property: PropertyData) => (
     <TableRowComponent point={property} key={property.id} displayIndex={false} />
   ));
 
-  if (isLoading || isRefetching) return <LoadingComponent />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <>
       {notify && <SuccessNotificationComponent msg={notify} />}
-      <Box>
+      <Box style={boxStyle}>
         {realEstates &&
-          <Table verticalSpacing="md" highlightOnHover withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60} px={4}>
+          <Table verticalSpacing="md" highlightOnHover withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={0} px={4}>
             <TableHeadComponent displayIndex={false} />
             <Table.Tbody>{realEstatesJsx}</Table.Tbody>
-          </Table>}
+          </Table>
+        }
       </Box>
     </>
   )
 }
-`2`

@@ -3,21 +3,23 @@ import { NavLink } from "react-router-dom";
 
 //mantine UI
 import { AppShell, Flex } from '@mantine/core';
+import { useHeadroom } from '@mantine/hooks';
 
 interface NavLink {
   name: string;
   href: string;
 }
 
+const navLinks: NavLink[] = [
+  { name: "Home", href: "" },
+  { name: "knn", href: "knn-form" },
+  { name: "K-means", href: "kmeans-form" },
+  { name: "add property", href: "add-form" },
+];
 export default function MainNavbarComponent() {
-  const navLinks: NavLink[] = [
-    { name: "Home", href: "" },
-    { name: "knn", href: "knn-form" },
-    { name: "K-means", href: "kmeans-form" },
-    { name: "add property", href: "add-form" },
-  ];
+  const pinned = useHeadroom({ fixedAt: 70 });
   return (
-    <AppShell >
+    <AppShell header={{ height: 60, collapsed: !pinned, offset: false }}>
       <AppShell.Header px={{ sm: "lg" }} py="sm" bg="indigo" >
         <Flex
           gap={{ base: "lg", sm: "xl" }}
